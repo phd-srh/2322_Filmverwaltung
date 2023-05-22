@@ -35,32 +35,57 @@ public class TempFilmDAO implements FilmDAO {
 
     @Override
     public boolean insertMovie(Film f) {
-        return false;
+        Film film = getMovieByNumber( f.getFilmnummer() );
+        if (film != null) return false;
+        filmListe.add( f.clone() );
+        return true;
     }
 
     @Override
     public Film getMovieByNumber(int fnr) {
+        for (int i=0; i < filmListe.size(); i++) {
+            if (filmListe.get(i).getFilmnummer() == fnr)
+                return filmListe.get(i).clone();
+        }
         return null;
     }
 
     @Override
     public List<Film> getAllMovies() {
-        return null;
+        List<Film> copyList = new ArrayList<>( filmListe.size() );
+        for (Film f : filmListe) {
+            // copyList.add(f); // <-- shallow copy :( -- so auch nicht
+            copyList.add( f.clone() ); // so ist richtig, deep copy
+        }
+        return copyList;
+        //return filmListe; -- so auf keinen Fall!
     }
 
     @Override
     public boolean updateMovie(int fnr, Film f) {
-        return false;
+        deleteMovie(fnr);
+        return insertMovie(f);
     }
 
     @Override
     public boolean deleteMovie(int fnr) {
+        for (int i=0; i < filmListe.size(); i++) {
+            if (filmListe.get(i).getFilmnummer() == fnr) {
+                filmListe.remove(i);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     public int getHighestMovieNumber() {
-        return 0;
+        int maxFilmnummer = 0;
+        for (int i=0; i<filmListe.size(); i++) {
+            if (filmListe.get(i).getFilmnummer() > maxFilmnummer)
+                maxFilmnummer = filmListe.get(i).getFilmnummer();
+        }
+        return maxFilmnummer;
     }
 
     @Override

@@ -20,4 +20,8 @@ public class Genre {
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
+
+    public Genre clone() {
+        return new Genre(genrenummer, bezeichnung);
+    }
 }

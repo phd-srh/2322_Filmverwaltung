@@ -50,4 +50,8 @@ public class Film {
     public void setErscheinungsjahr(int erscheinungsjahr) {
         this.erscheinungsjahr = erscheinungsjahr;
     }
+
+    public Film clone() {
+        return new Film(filmnummer, titel, genre.clone(), rating, erscheinungsjahr);
+    }
 }
