@@ -90,36 +90,63 @@ public class TempFilmDAO implements FilmDAO {
 
     @Override
     public boolean insertGenre(Genre g) {
-        return false;
+        Genre g2 = getGenreByNumber( g.getGenrenummer() );
+        if (g2 != null) return false;
+        genreListe.add( g.clone() );
+        return true;
     }
 
     @Override
     public Genre getGenreByNumber(int gnr) {
+        for (int i=0; i < genreListe.size(); i++) {
+            if (genreListe.get(i).getGenrenummer() == gnr)
+                return genreListe.get(i).clone();
+        }
         return null;
     }
 
     @Override
     public Genre getGenreByName(String name) {
+        for (int i=0; i < genreListe.size(); i++) {
+            if (genreListe.get(i).getBezeichnung().equals(name))
+                return genreListe.get(i).clone();
+        }
         return null;
     }
 
     @Override
     public List<Genre> getAllGenres() {
-        return null;
+        List<Genre> copyList = new ArrayList<>( genreListe.size() );
+        for (Genre g : genreListe) {
+            copyList.add( g.clone() );
+        }
+        return copyList;
     }
 
     @Override
     public boolean updateGenre(int gnr, Genre g) {
-        return false;
+        deleteGenre(gnr);
+        return insertGenre(g);
     }
 
     @Override
     public boolean deleteGenre(int gnr) {
+        for (int i=0; i < genreListe.size(); i++) {
+            if (genreListe.get(i).getGenrenummer() == gnr) {
+                genreListe.remove(i);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     public int getHighestGenreNumber() {
-        return 0;
+        int maxGenrenummer = 0;
+        for (int i=0; i<genreListe.size(); i++) {
+            if (genreListe.get(i).getGenrenummer() > maxGenrenummer)
+                maxGenrenummer = genreListe.get(i).getGenrenummer();
+        }
+        return maxGenrenummer;
     }
 }
