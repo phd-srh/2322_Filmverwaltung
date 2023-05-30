@@ -73,6 +73,75 @@ public class Main {
     }
 
     private static void neuenFilmAnlegen() {
-        
+
+        Film film = null;
+        int filmnummer;
+        do {
+            System.out.print("Bitte eine Filmnummer eingeben: ");
+            filmnummer = eingabe.nextInt();
+            eingabe.nextLine(); // Rest der Eingabezeile konsumieren
+            // extra feature
+            if (filmnummer == 0) {
+                filmnummer = filmDB.getHighestMovieNumber() + 1;
+                System.out.println("Wir haben die Filmnummer "
+                        + filmnummer + " für Sie gewählt.");
+            }
+            film = filmDB.getMovieByNumber(filmnummer);
+            if (film != null) {
+                System.out.println("Die Filmnummer ist bereits vergeben für den Titel '"
+                    + film.getTitel() + "'");
+            }
+        } while (film != null);
+
+        String titel;
+        do {
+            System.out.println("Bitte den Titel eingeben: ");
+            titel = eingabe.nextLine();
+            if (titel.isBlank()) {
+                System.out.println("Dieser Titel ist ungültig");
+            }
+        } while ( ! titel.isBlank() );
+
+        String genreBezeichnung;
+        Genre genre = null;
+        do {
+            System.out.print("Bitte Genre auswählen: ");
+            genreBezeichnung = eingabe.nextLine();
+            if (genreBezeichnung.charAt(0) == '0') {
+                List<Genre> genreList = filmDB.getAllGenres();
+                int genreIndex = 0;
+                do {
+                    for (int i = 0; i < genreList.size(); i++) {
+                        System.out.println((i + 1) + ": " + genreList.get(i).getBezeichnung());
+                    }
+                    System.out.print("Ihre Wahl: ");
+                    genreIndex = eingabe.nextInt();
+                } while ( genreIndex < 1 || genreIndex >= genreList.size() );
+                genre = genreList.get(genreIndex-1);
+            }
+            else {
+                genre = filmDB.getGenreByName(genreBezeichnung);
+                if (genre == null) {
+                    System.out.print("Unbekanntes Genre '" +
+                            genreBezeichnung +
+                            "'. Soll dies neu angelegt werden (j/n)?");
+                    char auswahl = eingabe.next().toUpperCase().charAt(0);
+                    eingabe.nextLine();
+                    if (auswahl == 'J') {
+                        genre = new Genre(filmDB.getHighestGenreNumber()+1, genreBezeichnung);
+                        if ( filmDB.insertGenre(genre) ) {
+                            System.out.println("Genre '"
+                                    + genreBezeichnung
+                                    + "' wurde neu angelegt.");
+                        }
+                    }
+                }
+            }
+        } while (genre == null);
+
+        // DEBUG Ausgabe
+        System.out.println("Filmnummer: " + filmnummer);
+        System.out.println("Filmtitel : " + titel);
+        System.out.println("Genre     : " + genre);
     }
 }
