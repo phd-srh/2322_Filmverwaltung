@@ -95,12 +95,12 @@ public class Main {
 
         String titel;
         do {
-            System.out.println("Bitte den Titel eingeben: ");
+            System.out.print("Bitte den Titel eingeben: ");
             titel = eingabe.nextLine();
             if (titel.isBlank()) {
                 System.out.println("Dieser Titel ist ungültig");
             }
-        } while ( ! titel.isBlank() );
+        } while ( titel.isBlank() );
 
         String genreBezeichnung;
         Genre genre = null;
@@ -116,6 +116,7 @@ public class Main {
                     }
                     System.out.print("Ihre Wahl: ");
                     genreIndex = eingabe.nextInt();
+                    eingabe.nextLine();
                 } while ( genreIndex < 1 || genreIndex >= genreList.size() );
                 genre = genreList.get(genreIndex-1);
             }
