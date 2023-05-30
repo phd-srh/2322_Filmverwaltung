@@ -24,4 +24,9 @@ public class Genre {
     public Genre clone() {
         return new Genre(genrenummer, bezeichnung);
     }
+
+    @Override
+    public String toString() {
+        return bezeichnung;
+    }
 }

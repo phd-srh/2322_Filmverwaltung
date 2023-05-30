@@ -54,4 +54,11 @@ public class Film {
     public Film clone() {
         return new Film(filmnummer, titel, genre.clone(), rating, erscheinungsjahr);
     }
+
+    @Override
+    public String toString() {
+        return filmnummer + " | " + titel +
+                " (" + erscheinungsjahr + ") " +
+                genre + " : " + rating;
+    }
 }
