@@ -52,6 +52,24 @@ public class Main {
     }
 
     private static void filmLöschen() {
+        System.out.print("Bitte die zu löschende Filmnummer eingeben: ");
+        int filmnummer = eingabe.nextInt();
+        Film film = filmDB.getMovieByNumber(filmnummer);
+        if (film != null) {
+            System.out.println("Achtung. Sie wollen den Film '" +
+                    film.getTitel() +
+                    "' löschen.");
+            System.out.print("Wirklich löschen (j/n)? ");
+            char auswahl = eingabe.next().toUpperCase().charAt(0);
+            eingabe.nextLine();
+            if (auswahl == 'J') {
+                if ( filmDB.deleteMovie(filmnummer) ) {
+                    System.out.println("Film '"
+                            + film.getTitel()
+                            + "' wurde gelöscht.");
+                }
+            }
+        }
     }
 
     private static void neuenFilmAnlegen() {
