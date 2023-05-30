@@ -57,8 +57,7 @@ public class Film {
 
     @Override
     public String toString() {
-        return filmnummer + " | " + titel +
-                " (" + erscheinungsjahr + ") " +
-                genre + " : " + rating;
+        return String.format("%3d | %-30s (%4d), %-10s : %.1f",
+                filmnummer, titel, erscheinungsjahr, genre, rating);
     }
 }

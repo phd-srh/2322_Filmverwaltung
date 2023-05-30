@@ -30,7 +30,7 @@ public class TempFilmDAO implements FilmDAO {
         filmListe.add( new Film(2, "Herr der Fliegen", g2, 3.2, 1990) );
         filmListe.add( new Film(3, "Bruce allmächtig", g3, 3.4, 2003) );
         filmListe.add( new Film(4, "Stirb langsam", g1, 4.1, 1988) );
-        filmListe.add( new Film(5, "American Pie", g3, 3.5, 1999) );
+        filmListe.add( new Film(50, "American Pie", g3, 3.5, 1999) );
     }
 
     @Override
