@@ -55,9 +55,14 @@ public class Film {
         return new Film(filmnummer, titel, genre.clone(), rating, erscheinungsjahr);
     }
 
+    private static String cutString(String input, int maxLength) {
+        if (input.length() <= maxLength) return input;
+        return input.substring(0, maxLength-3) + "...";
+    }
+
     @Override
     public String toString() {
         return String.format("%3d | %-30s (%4d), %-10s : %.1f",
-                filmnummer, titel, erscheinungsjahr, genre, rating);
+                filmnummer, cutString(titel, 30), erscheinungsjahr, genre, rating);
     }
 }

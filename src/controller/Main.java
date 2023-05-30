@@ -140,9 +140,19 @@ public class Main {
             }
         } while (genre == null);
 
-        // DEBUG Ausgabe
-        System.out.println("Filmnummer: " + filmnummer);
-        System.out.println("Filmtitel : " + titel);
-        System.out.println("Genre     : " + genre);
+        System.out.print("Bitte Erscheinungsjahr eingeben: ");
+        int erscheinungsjahr = eingabe.nextInt();
+
+        double rating;
+        do {
+            System.out.print("Bitte Rating (0-5) eingeben: ");
+            rating = eingabe.nextDouble();
+        } while (rating < 0.0 || rating > 5.0);
+
+        film = new Film(filmnummer, titel, genre, rating, erscheinungsjahr);
+        if ( filmDB.insertMovie(film) ) {
+            System.out.println("Der Film '" + film.getTitel() +
+                    "' wurde der Datenbank hinzugefügt.");
+        }
     }
 }
